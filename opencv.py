@@ -3,7 +3,7 @@ import cv2 as cv
 
 cap = None
 
-def capture_video():
+def capture_frame():
     global cap
     if cap is None:
         cap = cv.VideoCapture(0)
@@ -15,9 +15,8 @@ def capture_video():
         print("Can't receive frame")
         return None
     # Return the color frame (BGR), as MediaPipe needs color for hand detection
-    cv.imshow('frame', frame)
     if cv.waitKey(1) == ord('q'):
-        return
+        return -1
     return frame
 
     # When everything done, release the capture

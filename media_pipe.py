@@ -7,8 +7,6 @@ import os
 from mediapipe import Image
 from mediapipe.tasks.python.vision import HandLandmarkerResult
 import cv2 as cv
-from mediapipe import solutions
-drawing_utils = solutions.drawing_utils
 
 class HandLandmarkerManager:
     def __init__(self):
@@ -30,15 +28,21 @@ class HandLandmarkerManager:
 
         options = HandLandmarkerOptions(
             base_options=BaseOptions(model_asset_path=model_path),
-            running_mode=VisionRunningMode.LIVE_STREAM,
-            result_callback=print_result)
+            running_mode=VisionRunningMode.IMAGE)
         self.landmarker = HandLandmarker.create_from_options(options)
 
     def detect(self, numpy_frame_from_opencv, frame_timestamp_ms):
         if self.landmarker is None:
-            return
-        mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=numpy_frame_from_opencv)
-        self.landmarker.detect_async(mp_image, frame_timestamp_ms)
+            return numpy_frame_from_opencv
+        image = numpy_frame_from_opencv.copy()
+        mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=image)
+        result = self.landmarker.detect(mp_image)
+        if result.hand_landmarks:
+            for landmark in result.hand_landmarks[0]:
+                x = int(landmark.x * image.shape[1])
+                y = int(landmark.y * image.shape[0])
+                cv.circle(image, (x, y), 5, (255,255,255), -1)  
+        return image
 
     def close(self):
         if self.landmarker:
