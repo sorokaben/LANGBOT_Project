@@ -6,6 +6,9 @@ from mediapipe.tasks.python import vision
 import os
 from mediapipe import Image
 from mediapipe.tasks.python.vision import HandLandmarkerResult
+import cv2 as cv
+from mediapipe import solutions
+drawing_utils = solutions.drawing_utils
 
 class HandLandmarkerManager:
     def __init__(self):
