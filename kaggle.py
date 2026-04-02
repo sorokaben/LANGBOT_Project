@@ -58,7 +58,6 @@ def collate_images(event_type):
                         for idx, landmark in enumerate(landmarks_to_iterate):
                             row_data[f'x_{idx}'] = landmark.x
                             row_data[f'y_{idx}'] = landmark.y
-                            row_data[f'z_{idx}'] = landmark.z
                         output_data.append(row_data)
                         output_key.append(row_key)
 
