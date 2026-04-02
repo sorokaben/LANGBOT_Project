@@ -31,13 +31,21 @@ class HandLandmarkerManager:
             running_mode=VisionRunningMode.IMAGE)
         self.landmarker = HandLandmarker.create_from_options(options)
 
+    def extract_landmarks(self, numpy_frame_from_opencv):
+        """Extract raw landmarks from a frame without drawing."""
+        if self.landmarker is None:
+            return None
+        mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=numpy_frame_from_opencv)
+        result = self.landmarker.detect(mp_image)
+        return result
+    
     def detect(self, numpy_frame_from_opencv, frame_timestamp_ms):
+        """Detect landmarks and draw them on the frame."""
         if self.landmarker is None:
             return numpy_frame_from_opencv
         image = numpy_frame_from_opencv.copy()
-        mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=image)
-        result = self.landmarker.detect(mp_image)
-        if result.hand_landmarks:
+        result = self.extract_landmarks(image)
+        if result and result.hand_landmarks:
             for landmark in result.hand_landmarks[0]:
                 x = int(landmark.x * image.shape[1])
                 y = int(landmark.y * image.shape[0])
@@ -47,4 +55,7 @@ class HandLandmarkerManager:
     def close(self):
         if self.landmarker:
             self.landmarker.close()
+
+
+
 
