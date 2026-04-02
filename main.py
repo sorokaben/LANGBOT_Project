@@ -7,11 +7,13 @@ import os
 
 def main():
     # Check if landmarks CSV exists, if not, batch process images
-    if not os.path.exists('hand_landmarks.csv'):
-        print("hand_landmarks.csv not found. Batch processing images...")
-        kaggle.collate_images()
+    if not os.path.exists('train.csv'):
+        print("train.csv not found. Batch processing images...")
+        kaggle.collate_images('train')
+        kaggle.collate_images('test')
+
     else:
-        print("hand_landmarks.csv already exists. Skipping batch processing.")
+        print("train.csv already exists. Skipping batch processing.")
     
     landmarker = media_pipe.HandLandmarkerManager()
         
