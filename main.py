@@ -4,6 +4,7 @@ import time
 import cv2 as cv
 import kaggle
 import os
+import AImodel
 
 def main():
     # Check if landmarks CSV exists, if not, batch process images
@@ -16,6 +17,8 @@ def main():
         print("train.csv already exists. Skipping batch processing.")
     
     landmarker = media_pipe.HandLandmarkerManager()
+
+    AImodel.create_model()
         
     try:
         while True:
