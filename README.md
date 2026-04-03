@@ -15,3 +15,9 @@ The purpose of this project was to create a solution to translating ASL hand sig
 By using this program, a deaf or hard-of-hearing person can easily communicate with a non-ASL speaker. Originally, this project
 was meant to include real-time translation for full words and ASL motions, but due to limited knowledge the idea was modified to
 this alternative. 
+
+## Future Improvements
+- Support for dynamic ASL gestures (not just static signs)  
+- Improved  detection
+- Expanded dataset for higher accuracy and robustness  
+- Mobile or web-based deployment for broader accessibility  
