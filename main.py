@@ -53,6 +53,7 @@ def main():
     try:
         while True:
             frame = opencv.capture_frame()
+            frame = cv.flip(frame, 1)
             if frame is None:
                 break
             if frame is -1:
