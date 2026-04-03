@@ -7,6 +7,9 @@ def capture_frame():
     global cap
     if cap is None:
         cap = cv.VideoCapture(0)
+
+        cap.set(cv.CAP_PROP_FRAME_WIDTH, 512)
+        cap.set(cv.CAP_PROP_FRAME_HEIGHT, 512)
         if not cap.isOpened():
             print("Cannot open camera")
             return None
